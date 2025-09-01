@@ -1,0 +1,18 @@
+
+services:
+  db:
+    image: mysql:9.4
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ejemplo       # opcional: crea una base de datos inicial
+      MYSQL_USER: user              # opcional: crea un usuario
+      MYSQL_PASSWORD: password  # opcional: password del usuario
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
