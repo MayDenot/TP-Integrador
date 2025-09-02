@@ -7,7 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-
 public class Factura {
     private Integer idFactura;
     private Integer idCliente;
