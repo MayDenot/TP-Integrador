@@ -7,8 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Factura_ProductoDTO {
-  private Integer cantidad;
+public class ProductoDTO {
+  private Integer idProducto;
   private String nombre;
-  private Float valor;
+  private int recaudacion;
 }

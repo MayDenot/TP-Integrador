@@ -1,5 +1,6 @@
 package DAO;
 
+import DTO.ProductoDTO;
 import entities.Producto;
 import lombok.AllArgsConstructor;
 import java.sql.Connection;
@@ -33,4 +34,11 @@ public class ProductoDAO {
       }
     }
   }
+
+//  public ProductoDTO getTopProductDTO() {
+//    String query = "SELECT p.idProducto, p.nombre, SUM(f.cantidad * p.valor) AS recaudacion " +
+//            "FROM producto p " +
+//            "JOIN factura f ON p.idProducto = f.idProducto ";
+//
+//  }
 }

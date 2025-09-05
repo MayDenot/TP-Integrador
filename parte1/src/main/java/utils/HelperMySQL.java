@@ -22,7 +22,7 @@ public class HelperMySQL {
 
   public HelperMySQL() {
     String driver = "com.mysql.cj.jdbc.Driver";
-    String uri = "jdbc:mysql://localhost:3306/ejemplo";
+    String uri = "jdbc:mysql://localhost:3306/Entregable1";
 
     try {
       Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -33,7 +33,7 @@ public class HelperMySQL {
     }
 
     try {
-      conn = DriverManager.getConnection(uri, "root", "password");
+      conn = DriverManager.getConnection(uri, "root", "");
       conn.setAutoCommit(false);
     } catch (Exception e) {
       e.printStackTrace();
@@ -250,6 +250,20 @@ public class HelperMySQL {
   }
 
   private int insertFactura(Factura factura, Connection conn) throws Exception {
+    String insert = "INSERT INTO factura (idFactura, idCliente) VALUES (?, ?)";
+    PreparedStatement ps = null;
+    try {
+      ps = conn.prepareStatement(insert);
+      ps.setInt(1, factura.getIdFactura());
+      ps.setInt(2, factura.getIdCliente());
+      if (ps.executeUpdate() == 0) {
+        throw new Exception("No se pudo insertar");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      closePsAndCommit(conn, ps);
+    }
     return 0;
   }
 

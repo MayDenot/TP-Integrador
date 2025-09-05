@@ -14,9 +14,9 @@ import java.sql.SQLException;
 @NoArgsConstructor
 public class MySQLDAOFactory extends AbstractFactory {
     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static String URI = "jdbc:mysql://localhost:3306/ejemplo";
+    private static String URI = "jdbc:mysql://localhost:3306/Entregable1";
     private static String user = "root";
-    private static String password = "password";
+    private static String password = "";
     private static Connection conn;
     private static MySQLDAOFactory instance = null;
 
@@ -42,7 +42,7 @@ public class MySQLDAOFactory extends AbstractFactory {
         }
 
         try {
-            conn = DriverManager.getConnection(URI, "root", "password");
+            conn = DriverManager.getConnection(URI, user, password);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
