@@ -2,9 +2,12 @@ import DAO.ClienteDAO;
 import DAO.FacturaDAO;
 import DAO.Factura_ProductoDAO;
 import DAO.ProductoDAO;
+import DTO.ClienteDTO;
 import DTO.ProductoDTO;
 import factory.AbstractFactory;
 import utils.HelperMySQL;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -24,6 +27,13 @@ public class Main {
         System.out.println("Producto que más recaudó: ");
         ProductoDTO productoDTO = productoDAO.getTopProductDTO();
         System.out.println(productoDTO);
+
+        System.out.println("////////////////////////////////////////////////////////////////////");
+
+        System.out.println("Lista de clientes ordenados por facturacion: ");
+        List<ClienteDTO> clientesDTO = clienteDAO.getClientsBilled();
+        System.out.println(clientesDTO);
+
 
     }
 }

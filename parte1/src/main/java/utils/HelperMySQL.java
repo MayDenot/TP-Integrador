@@ -51,7 +51,7 @@ public class HelperMySQL {
   }
 
   public void dropTables() throws SQLException {
-    String dropFactura_Producto = "DROP TABLE IF EXISTS Factura_Producto";
+    String dropFactura_Producto = "DROP TABLE IF EXISTS factura_producto";
     this.conn.prepareStatement(dropFactura_Producto).execute();
     this.conn.commit();
 
