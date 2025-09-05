@@ -37,9 +37,9 @@ public class ProductoDAO {
   }
 
   public ProductoDTO getTopProductDTO() {
-    String query = "SELECT p.idProducto, p.nombre, SUM(f.cantidad * p.valor) AS recaudacion " +
+    String query = "SELECT p.idProducto, p.nombre, SUM(fp.cantidad * p.valor) AS recaudacion " +
             "FROM producto p " +
-            "JOIN factura f ON p.idProducto = f.idProducto " +
+            "JOIN factura_producto fp ON p.idProducto = fp.idProducto " +
             "GROUP BY p.idProducto, p.nombre " +
             "ORDER BY recaudacion DESC " +
             "LIMIT 1";
@@ -71,6 +71,6 @@ public class ProductoDAO {
         e.printStackTrace();
       }
     }
-  return productoDTO;
+    return productoDTO;
   }
 }
