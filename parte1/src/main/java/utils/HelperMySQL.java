@@ -63,7 +63,7 @@ public class HelperMySQL {
     this.conn.prepareStatement(dropProducto).execute();
     this.conn.commit();
 
-    String dropCliente = "DROP TALBE IF EXISTS cliente";
+    String dropCliente = "DROP TABLE IF EXISTS cliente";
     this.conn.prepareStatement(dropCliente).execute();
     this.conn.commit();
   }
@@ -72,41 +72,40 @@ public class HelperMySQL {
     String tablaCliente = "CREATE TABLE IF NOT EXISTS cliente ( " +
                           "idCliente INT PRIMARY KEY, " +
                           "nombre VARCHAR(50) NOT NULL, " +
-                          "email VARCHAR(50) NOT NULL " +
+                          "email VARCHAR(100) NOT NULL " +
                           ");";
     this.conn.prepareStatement(tablaCliente).execute();
     this.conn.commit();
 
-    String tablaFactura = "CREATE TABLE IF NOT EXIST factura ( " +
-                          "idFacura INT PRIMARY KEY, " +
+    String tablaFactura = "CREATE TABLE IF NOT EXISTS factura ( " +
+                          "idFactura INT PRIMARY KEY, " +
                           "idCliente INT NOT NULL, " +
                           "FOREIGN KEY (idCliente) REFERENCES cliente(idCliente) " +
                           ");";
     this.conn.prepareStatement(tablaFactura).execute();
     this.conn.commit();
 
-    String tablaProducto = "CREATE TABLE IF NOT EXIST producto ( " +
+    String tablaProducto = "CREATE TABLE IF NOT EXISTS producto ( " +
                            "idProducto INT PRIMARY KEY, " +
-                           "nombre VARCHAR(50) NOT NULL, )" +
+                           "nombre VARCHAR(50) NOT NULL, " +
                            "valor FLOAT NOT NULL " +
                            ");";
     this.conn.prepareStatement(tablaProducto).execute();
     this.conn.commit();
 
-    String tablaFactura_Producto = "CREATE TABLE IF NOT EXIST factura_producto( " +
+    String tablaFactura_Producto = "CREATE TABLE IF NOT EXISTS factura_producto( " +
                                    "idFactura INT NOT NULL, " +
                                    "idProducto INT NOT NULL, " +
-                                   "cantidad INT NOT NULL" +
+                                   "cantidad INT NOT NULL, " +
                                    "PRIMARY KEY(idFactura, idProducto), " +
                                    "FOREIGN KEY (idFactura) REFERENCES factura(idFactura), " +
-                                   "FOREIGN KEY (idProducto) REFERENCES producto(idProducto) )" +
-                                   ");";
+                                   "FOREIGN KEY (idProducto) REFERENCES producto(idProducto));";
     this.conn.prepareStatement(tablaFactura_Producto).execute();
     this.conn.commit();
   }
 
   public Iterable<CSVRecord> getData(String archivo) throws IOException {
-    String path = "src/main/resources/" + archivo;
+    String path = "parte1/src/main/resources/" + archivo;
     Reader in = new FileReader(path);
     String[] header = {};
     CSVParser parser = CSVFormat.EXCEL.withHeader(header).parse(in);
