@@ -4,21 +4,21 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
              version="3.1">
 
-    <persistence-unit name="Ej1" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="parte2" transaction-type="RESOURCE_LOCAL">
         <!-- Hibernate como proveedor de JPA -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- ENTIDADES REGISTRADAS -->
-        <class>JPAyMySQL.ModeloDatos.Persona</class>
-        <class>JPAyMySQL.ModeloDatos.Direccion</class>
-        <class>JPAyMySQL.ModeloDatos.Socio</class>
-        <class>JPAyMySQL.ModeloDatos.Turno</class>
-
+        <!-- FALTAN LAS CLASES -->
+        <class>entites.Carrera</class>
+        <class>entites.Estudiante_Carrera</class>
+        <class>entites.Carrera</class>
+        <class>entites.Estudiante_Carrera_PK</class>
 
         <properties>
             <!-- Conexión a MySQL -->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/mis_datos?createDatabaseIfNotExist=true"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Entregable2?createDatabaseIfNotExist=true"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value=""/>
 
