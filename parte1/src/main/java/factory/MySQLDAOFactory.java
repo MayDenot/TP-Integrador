@@ -5,51 +5,80 @@ import DAO.FacturaDAO;
 import DAO.Factura_ProductoDAO;
 import DAO.ProductoDAO;
 import lombok.NoArgsConstructor;
+import repository.mysql.MySqlClienteDAO;
+import repository.mysql.MySqlFacturaDAO;
+import repository.mysql.MySqlFactura_ProductoDAO;
+import repository.mysql.MySqlProductoDAO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@NoArgsConstructor
+
 public class MySQLDAOFactory extends AbstractFactory {
-    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static String URI = "jdbc:mysql://localhost:3306/Entregable1";
-    private static String user = "root";
-    private static String password = "";
+     private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static String URI = "jdbc:mysql://localhost:3308/Entregable1";
+    private static  String user = "root";
+    private static  String password = "";
     private static Connection conn;
-    private static MySQLDAOFactory instance = null;
+    private static   volatile MySQLDAOFactory instance;
 
-    public static MySQLDAOFactory getInstance() {
-        if (instance == null) {
-            instance = new MySQLDAOFactory();
-        }
-        return instance;
-    }
-
-    public static Connection createConnection() {
-        if (conn != null) {
-            return conn;
-        }
-
-        String driver = DRIVER;
+    private MySQLDAOFactory() {
         try {
-            Class.forName(driver).getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                 | NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
 
-        try {
             conn = DriverManager.getConnection(URI, user, password);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static MySQLDAOFactory getInstance() {
+        if (instance == null) {
+            synchronized (MySQLDAOFactory.class) {
+                if (instance == null) {
+                    instance = new MySQLDAOFactory();
+                }
+            }
+
+        }
+        return instance;
+    }
+
+    public static Connection createConnection() {
+        // Si ya existe la conexión, la retornamos
+        if (conn != null) {
+            return conn;
+        }
+
+        try {
+            // Cargar el driver de MySQL
+            Class.forName(DRIVER).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                 InvocationTargetException | NoSuchMethodException | SecurityException |
+                 ClassNotFoundException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        try {
+            // Intentar la conexión con la base de datos
+            conn = DriverManager.getConnection(URI, user, password);
+            conn.setAutoCommit(false); // deshabilitamos autocommit si usamos transacciones
+            System.out.println("Conectado correctamente a la base de datos");
+        } catch (SQLException e) {
+            // Mostrar error si falla la conexión
+            System.out.println("Error al conectarse a la base de datos: " + e.getMessage());
+            e.printStackTrace();
+            // Opcional: salir del programa si la conexión es crítica
+            System.exit(1);
+        }
+
         return conn;
     }
+
 
     public void closeConnection() {
         try {
@@ -61,21 +90,21 @@ public class MySQLDAOFactory extends AbstractFactory {
 
     @Override
     public ClienteDAO getClienteDAO() {
-        return new ClienteDAO(createConnection());
+        return MySqlClienteDAO.getInstance(createConnection());
     }
 
     @Override
     public FacturaDAO getFacturaDAO() {
-        return new FacturaDAO(createConnection());
+        return MySqlFacturaDAO.getInstance(createConnection());
     }
 
     @Override
     public Factura_ProductoDAO getFPDAO() {
-        return new Factura_ProductoDAO(createConnection());
+        return  MySqlFactura_ProductoDAO.getInstance(createConnection());
     }
 
     @Override
     public ProductoDAO getProductoDAO() {
-        return new ProductoDAO(createConnection());
+        return MySqlProductoDAO.getInstance(createConnection());
     }
 }

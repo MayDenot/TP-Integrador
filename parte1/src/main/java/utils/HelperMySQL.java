@@ -22,7 +22,7 @@ public class HelperMySQL {
 
   public HelperMySQL() {
     String driver = "com.mysql.cj.jdbc.Driver";
-    String uri = "jdbc:mysql://localhost:3306/Entregable1";
+    String uri = "jdbc:mysql://localhost:3308/Entregable1";
 
     try {
       Class.forName(driver).getDeclaredConstructor().newInstance();
