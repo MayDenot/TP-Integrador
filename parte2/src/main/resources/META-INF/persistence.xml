@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <persistence-unit name="Ej1" transaction-type="RESOURCE_LOCAL">
+        <!-- Hibernate como proveedor de JPA -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- ENTIDADES REGISTRADAS -->
+        <class>JPAyMySQL.ModeloDatos.Persona</class>
+        <class>JPAyMySQL.ModeloDatos.Direccion</class>
+        <class>JPAyMySQL.ModeloDatos.Socio</class>
+        <class>JPAyMySQL.ModeloDatos.Turno</class>
+
+
+        <properties>
+            <!-- Conexión a MySQL -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/mis_datos?createDatabaseIfNotExist=true"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+
+            <!-- Hibernate: creación automática de tablas -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!-- Opciones:
+                 - validate    -> valida el esquema existente
+                 - update      -> actualiza sin borrar datos
+                 - create      -> crea tablas nuevas cada vez
+                 - create-drop -> crea tablas y las borra al apagar -->
+
+            <!-- Dialecto de Hibernate para MySQL 8 -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+
+            <!-- Mostrar las sentencias SQL generadas -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
