@@ -19,6 +19,8 @@ public class Carrera {
   private int idCarrera;
   @Column
   private String nombre;
+  @Column
+  private int duracion;
   @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
   private List<Estudiante_Carrera> inscripciones;
 }
