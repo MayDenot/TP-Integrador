@@ -1,13 +1,22 @@
 package repository;
 
 import entites.Carrera;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
 public class DaoImplCarrera implements DaoCarrera{
+    private EntityManager em;
+
+    public DaoImplCarrera(EntityManager em) {
+        this.em = em;
+    }
+
     @Override
     public void insertar(Carrera carrera) {
-
+        em.getTransaction().begin();
+        em.persist(carrera);
+        em.getTransaction().commit();
     }
 
     @Override

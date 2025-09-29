@@ -1,10 +1,18 @@
 package repository;
 
 import entites.Estudiante;
+import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
 public class DaoImplEstudiante implements DaoEstudiante {
+
+    private EntityManager em;
+
+    public DaoImplEstudiante(EntityManager em) {
+        this.em = em;
+    }
+
     @Override
     public void insertar(Estudiante estudiante) {
 
