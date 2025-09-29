@@ -17,11 +17,11 @@ public class Estudiante_Carrera {
   @EmbeddedId
   private Estudiante_Carrera_PK idCompuesta;
   @Column
-  private LocalDate fechaInscripcion;
+  private int anioInscripcion;
   @Column
   private int antiguedad;
   @Column
-  private boolean graduado;
+  private int anioGraduacion;
   @ManyToOne(fetch = FetchType.EAGER)
   @MapsId("idEstudiante")
   private Estudiante estudiante;
