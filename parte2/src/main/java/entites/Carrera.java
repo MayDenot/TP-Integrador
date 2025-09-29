@@ -18,7 +18,7 @@ public class Carrera {
   @GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
   private int idCarrera;
   @Column
-  private String nombre;
+  private String carrera;
   @Column
   private int duracion;
   @OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)

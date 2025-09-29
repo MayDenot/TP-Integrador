@@ -1,6 +1,7 @@
 package repository;
 
 import entites.Carrera;
+import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -8,8 +9,8 @@ import java.util.List;
 public class DaoImplCarrera implements DaoCarrera{
     private EntityManager em;
 
-    public DaoImplCarrera(EntityManager em) {
-        this.em = em;
+    public DaoImplCarrera() {
+        this.em =  MySQLFactory.getInstance().getEntityManager();
     }
 
     @Override

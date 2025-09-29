@@ -42,7 +42,7 @@ public class MySQLFactory extends Factory {
 
     @Override
     public DaoCarrera getDaoCarrera() {
-        return new DaoImplCarrera(em);
+        return new DaoImplCarrera();
     }
 
     @Override

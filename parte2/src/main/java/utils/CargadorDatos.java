@@ -3,6 +3,7 @@ package utils;
 import entites.Carrera;
 import entites.Estudiante;
 import entites.Estudiante_Carrera;
+import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -14,6 +15,12 @@ import java.io.IOException;
 import java.util.function.Function;
 
 public class CargadorDatos {
+
+    private EntityManager em;
+
+    public CargadorDatos() {
+        this.em =  MySQLFactory.getInstance().getEntityManager();
+    }
     private static <T> void cargarDesdeCSV(String rutaCSV, EntityManager em, Function<CSVRecord, T> mapper) {
         try (
                 FileReader reader = new FileReader(rutaCSV);
@@ -43,8 +50,8 @@ public class CargadorDatos {
     // ==============================
     // CARGAR ESTUDIANTES
     // ==============================
-    public static void addEstudiantes(EntityManager em) {
-        cargarDesdeCSV("src/main/resources/csv/estudiantes.csv", em, row -> {
+    public void addEstudiantes() {
+        cargarDesdeCSV("parte2/src/main/resources/csv/estudiantes.csv", this.em, row -> {
             Estudiante estudiante = new Estudiante();
             estudiante.setIdEstudiante(Integer.parseInt(row.get("idEstudiante"))); // si no es autogenerado
             estudiante.setNombre(row.get("nombre"));
@@ -61,11 +68,11 @@ public class CargadorDatos {
     // ==============================
     // CARGAR CARRERAS
     // ==============================
-    public static void addCarreras(EntityManager em) {
-        cargarDesdeCSV("src/main/resources/csv/carreras.csv", em, row -> {
+    public void addCarreras() {
+        cargarDesdeCSV("parte2/src/main/resources/csv/carreras.csv", this.em, row -> {
             Carrera carrera = new Carrera();
             carrera.setIdCarrera(Integer.parseInt(row.get("idCarrera")));
-            carrera.setNombre(row.get("nombre"));
+            carrera.setCarrera(row.get("carrera"));
             carrera.setDuracion(Integer.parseInt(row.get("duracion")));
             return carrera;
         });
@@ -74,16 +81,16 @@ public class CargadorDatos {
     // ==============================
     // CARGAR RELACIÓN ESTUDIANTE-CARRERA
     // ==============================
-    public static void addEstudiantesCarrera(EntityManager em) {
-        cargarDesdeCSV("src/main/resources/csv/estudianteCarrera.csv", em, row -> {
+    public  void addEstudiantesCarrera() {
+        cargarDesdeCSV("parte2/src/main/resources/csv/estudianteCarrera.csv", this.em, row -> {
             Estudiante_Carrera ec = new Estudiante_Carrera();
 
             int idEstudiante = Integer.parseInt(row.get("idEstudiante"));
             int idCarrera = Integer.parseInt(row.get("idCarrera"));
 
             // Usamos getReference para no cargar toda la entidad
-            Estudiante estudianteRef = em.getReference(Estudiante.class, idEstudiante);
-            Carrera carreraRef = em.getReference(Carrera.class, idCarrera);
+            Estudiante estudianteRef = this.em.getReference(Estudiante.class, idEstudiante);
+            Carrera carreraRef = this.em.getReference(Carrera.class, idCarrera);
 
             ec.setEstudiante(estudianteRef);
             ec.setCarrera(carreraRef);
@@ -97,14 +104,14 @@ public class CargadorDatos {
     }
 
     // ==============================
-    // MÉTODO PRINCIPAL PARA CARGAR TODO
+    // MÉT0DO PRINCIPAL PARA CARGAR TOD0
     // ==============================
-    public static void cargarTodo(EntityManager em) {
+    public void cargarTodo() {
         System.out.println("Iniciando carga de datos iniciales...");
 
-        addCarreras(em);             // Primero carreras
-        addEstudiantes(em);          // Luego estudiantes
-        addEstudiantesCarrera(em);   // Finalmente la relación
+        addCarreras();             // Primero carreras
+        addEstudiantes();          // Luego estudiantes
+        addEstudiantesCarrera();   // Finalmente la relación
 
         System.out.println("Carga inicial finalizada correctamente.");
     }

@@ -22,10 +22,12 @@ public class Estudiante_Carrera {
   private int antiguedad;
   @Column
   private int anioGraduacion;
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("idEstudiante")
+  @JoinColumn(name = "idEstudiante")
   private Estudiante estudiante;
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @MapsId("idCarrera")
+  @JoinColumn(name = "idCarrera")
   private Carrera carrera;
 }

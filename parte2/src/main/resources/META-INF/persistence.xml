@@ -12,13 +12,13 @@
         <!-- FALTAN LAS CLASES -->
         <class>entites.Carrera</class>
         <class>entites.Estudiante_Carrera</class>
-        <class>entites.Carrera</class>
+        <class>entites.Estudiante</class>
         <class>entites.Estudiante_Carrera_PK</class>
 
         <properties>
             <!-- Conexión a MySQL -->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Entregable2?createDatabaseIfNotExist=true"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3308/Entregable2?createDatabaseIfNotExist=true"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value=""/>
 
