@@ -16,8 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Estudiante {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
-  private int idEstudiante;
+  @Column(name = "id_estudiante")
+  private int DNI;
   @Column
   private String nombre;
   @Column
@@ -27,11 +27,9 @@ public class Estudiante {
   @Column
   private String genero;
   @Column
-  private int dni;
-  @Column
   private String ciudad;
   @Column
-  private int nroLU;
+  private int LU;
   @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
   private List<Estudiante_Carrera> inscripciones;
 }

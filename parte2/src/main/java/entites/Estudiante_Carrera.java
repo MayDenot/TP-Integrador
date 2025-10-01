@@ -23,11 +23,11 @@ public class Estudiante_Carrera {
   @Column
   private int anioGraduacion;
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("idEstudiante")
-  @JoinColumn(name = "idEstudiante")
+  @MapsId("id_estudiante")
+  @JoinColumn(name = "id_estudiante")
   private Estudiante estudiante;
   @ManyToOne(fetch = FetchType.LAZY)
-  @MapsId("idCarrera")
-  @JoinColumn(name = "idCarrera")
+  @MapsId("id_carrera")
+  @JoinColumn(name = "id_carrera")
   private Carrera carrera;
 }

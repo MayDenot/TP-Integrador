@@ -3,6 +3,7 @@ package utils;
 import entites.Carrera;
 import entites.Estudiante;
 import entites.Estudiante_Carrera;
+import entites.Estudiante_Carrera_PK;
 import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
 import org.apache.commons.csv.CSVFormat;
@@ -30,7 +31,7 @@ public class CargadorDatos {
 
             for (CSVRecord row : parser) {
                 T entidad = mapper.apply(row);
-                em.persist(entidad);
+                em.merge(entidad);
             }
 
             em.getTransaction().commit();
@@ -53,14 +54,13 @@ public class CargadorDatos {
     public void addEstudiantes() {
         cargarDesdeCSV("parte2/src/main/resources/csv/estudiantes.csv", this.em, row -> {
             Estudiante estudiante = new Estudiante();
-            estudiante.setIdEstudiante(Integer.parseInt(row.get("idEstudiante"))); // si no es autogenerado
             estudiante.setNombre(row.get("nombre"));
             estudiante.setApellido(row.get("apellido"));
             estudiante.setEdad(Integer.parseInt(row.get("edad")));
             estudiante.setGenero(row.get("genero"));
-            estudiante.setDni(Integer.parseInt(row.get("dni")));
+            estudiante.setDNI(Integer.parseInt(row.get("DNI")));
             estudiante.setCiudad(row.get("ciudad"));
-            estudiante.setNroLU(Integer.parseInt(row.get("nroLu")));
+            estudiante.setLU(Integer.parseInt(row.get("LU")));
             return estudiante;
         });
     }
@@ -71,7 +71,7 @@ public class CargadorDatos {
     public void addCarreras() {
         cargarDesdeCSV("parte2/src/main/resources/csv/carreras.csv", this.em, row -> {
             Carrera carrera = new Carrera();
-            carrera.setIdCarrera(Integer.parseInt(row.get("idCarrera")));
+            carrera.setIdCarrera(Integer.parseInt(row.get("id_carrera")));
             carrera.setCarrera(row.get("carrera"));
             carrera.setDuracion(Integer.parseInt(row.get("duracion")));
             return carrera;
@@ -85,8 +85,12 @@ public class CargadorDatos {
         cargarDesdeCSV("parte2/src/main/resources/csv/estudianteCarrera.csv", this.em, row -> {
             Estudiante_Carrera ec = new Estudiante_Carrera();
 
-            int idEstudiante = Integer.parseInt(row.get("idEstudiante"));
-            int idCarrera = Integer.parseInt(row.get("idCarrera"));
+            int idEstudiante = Integer.parseInt(row.get("id_estudiante"));
+            int idCarrera = Integer.parseInt(row.get("id_carrera"));
+
+            // Crear la clave compuesta
+            Estudiante_Carrera_PK pk = new Estudiante_Carrera_PK(idEstudiante, idCarrera);
+            ec.setIdCompuesta(pk);  // Asignar la PK
 
             // Usamos getReference para no cargar toda la entidad
             Estudiante estudianteRef = this.em.getReference(Estudiante.class, idEstudiante);
@@ -94,8 +98,8 @@ public class CargadorDatos {
 
             ec.setEstudiante(estudianteRef);
             ec.setCarrera(carreraRef);
-            ec.setAnioInscripcion(Integer.parseInt(row.get("anioInscripçion")));
-            ec.setAnioGraduacion(Integer.parseInt(row.get("anioGraduacion")));
+            ec.setAnioInscripcion(Integer.parseInt(row.get("inscripcion")));
+            ec.setAnioGraduacion(Integer.parseInt(row.get("graduacion")));
             ec.setAntiguedad(Integer.parseInt(row.get("antiguedad")));
 
 

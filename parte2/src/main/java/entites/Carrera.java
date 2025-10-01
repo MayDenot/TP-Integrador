@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Carrera {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
+  //@GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
   private int idCarrera;
   @Column
   private String carrera;
