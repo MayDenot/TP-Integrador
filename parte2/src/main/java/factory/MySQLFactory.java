@@ -37,7 +37,7 @@ public class MySQLFactory extends Factory {
 
     @Override
     public DaoEstudiante getDaoEstudiante() {
-        return new DaoImplEstudiante(em);
+        return new DaoImplEstudiante();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MySQLFactory extends Factory {
 
     @Override
     public DaoEstudianteCarrera getDaoEstudianteCarrera() {
-        return new DaoImplEstudianteCarrera(em);
+        return new DaoImplEstudianteCarrera();
     }
 
 

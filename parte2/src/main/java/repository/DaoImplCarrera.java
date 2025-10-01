@@ -1,5 +1,6 @@
 package repository;
 
+import DTO.CarreraDTO;
 import entites.Carrera;
 import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
@@ -19,9 +20,19 @@ public class DaoImplCarrera implements DaoCarrera{
         em.persist(carrera);
         em.getTransaction().commit();
     }
-
     @Override
-    public List<Carrera> getCarrerasXCantidadDeInscriptos() {
-        return List.of();
+    public List<CarreraDTO> getCarrerasXCantidadDeInscriptos() {
+        try {
+            return em.createQuery(
+                    "SELECT new DTO.CarreraDTO(c.carrera, COUNT(ec.estudiante)) " +
+                            "FROM Estudiante_Carrera ec " +
+                            "JOIN ec.carrera c " +
+                            "GROUP BY c.carrera " +
+                            "ORDER BY COUNT(ec.estudiante) DESC",
+                    CarreraDTO.class
+            ).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener carreras por cantidad de inscriptos", e);
+        }
     }
 }

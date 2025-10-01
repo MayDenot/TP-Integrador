@@ -1,6 +1,7 @@
 package repository;
 
 import entites.Estudiante;
+import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
@@ -10,25 +11,27 @@ public class DaoImplEstudiante implements DaoEstudiante {
 
     private EntityManager em;
 
-    public DaoImplEstudiante(EntityManager em) {
-        this.em = em;
+    public DaoImplEstudiante() {
+        this.em = MySQLFactory.getInstance().getEntityManager();
     }
 
     @Override
     public void insertar(Estudiante estudiante) {
-
+        em.getTransaction().begin();
+        em.persist(estudiante);
+        em.getTransaction().commit();
     }
 
     @Override
-    public List<Estudiante> getEstudiantes() {
-        return em.createQuery("SELECT e FROM Estudiante e", Estudiante.class)
+    public List<Estudiante> getEstudiantesOrderedByApellido() {
+        return em.createQuery("SELECT e FROM Estudiante e ORDER BY e.apellido", Estudiante.class)
                 .getResultList();
     }
 
     public Estudiante getEstudianteByLibreta(int libreta) {
         try {
             return em.createQuery(
-                            "SELECT e FROM Estudiante e WHERE e.nroLU = :libreta",
+                            "SELECT e FROM Estudiante e WHERE e.LU = :libreta",
                             Estudiante.class)
                     .setParameter("libreta", libreta)
                     .getSingleResult();
