@@ -1,6 +1,8 @@
 package repository;
 
 import DTO.CarreraDTO;
+import DTO.ReporteDTO;
+import com.sun.source.tree.TryTree;
 import entites.Carrera;
 import factory.MySQLFactory;
 import jakarta.persistence.EntityManager;
@@ -33,6 +35,33 @@ public class DaoImplCarrera implements DaoCarrera{
             ).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Error al obtener carreras por cantidad de inscriptos", e);
+        }
+    }
+    @Override
+    public Carrera getCarreraById(int id) {
+        try{
+            return em.find(Carrera.class, id);
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<ReporteDTO> getReporte() {
+        try {
+           return em.createQuery("SELECT new DTO.ReporteDTO (" +
+                                            "c.carrera, " +
+                                            "COUNT(ec), " +
+                                            "SUM(CASE WHEN ec.anioGraduacion > 0 THEN 1 ELSE 0 END), " +
+                                            "ec.anioInscripcion" +
+                                            ") " +
+                                            "FROM Estudiante_Carrera ec JOIN ec.carrera c " +
+                                            "GROUP BY c.carrera, ec.anioInscripcion " +
+                                            "ORDER BY c.carrera ASC, ec.anioInscripcion ASC",
+                                    ReporteDTO.class
+                                    ).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener reporte de carreras", e);
         }
     }
 }

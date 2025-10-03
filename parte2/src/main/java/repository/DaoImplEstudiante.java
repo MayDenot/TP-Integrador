@@ -54,7 +54,7 @@ public class DaoImplEstudiante implements DaoEstudiante {
     public List getEstudiantesByCarreraYCiudad(int idCarrera, String ciudad) {
         try {
             return em.createQuery("SELECT ec.estudiante FROM Estudiante_Carrera  ec where ec.carrera.idCarrera=:idCarrera AND ec.estudiante.ciudad=:ciudad")
-                    .setParameter(idCarrera, idCarrera).setParameter("ciudad", ciudad).getResultList();
+                    .setParameter("idCarrera", idCarrera).setParameter("ciudad", ciudad).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("No hay estudiantes con esas " + idCarrera + " " + ciudad);
         }

@@ -1,21 +1,19 @@
 package entites;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Entity
 public class Carrera {
   @Id
-  //@GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
+  @GeneratedValue(strategy = GenerationType.AUTO) // sino IDENTITY
   private int idCarrera;
   @Column
   private String carrera;
