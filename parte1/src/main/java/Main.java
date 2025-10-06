@@ -33,7 +33,5 @@ public class Main {
         System.out.println("Lista de clientes ordenados por facturacion: ");
         List<ClienteDTO> clientesDTO = clienteDAO.getClientsBilled();
         System.out.println(clientesDTO);
-
-
     }
 }

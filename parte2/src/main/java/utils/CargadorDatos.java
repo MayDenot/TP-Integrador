@@ -48,9 +48,6 @@ public class CargadorDatos {
         }
     }
 
-    // ==============================
-    // CARGAR ESTUDIANTES
-    // ==============================
     public void addEstudiantes() {
         cargarDesdeCSV("parte2/src/main/resources/csv/estudiantes.csv", this.em, row -> {
             Estudiante estudiante = new Estudiante();
@@ -65,9 +62,6 @@ public class CargadorDatos {
         });
     }
 
-    // ==============================
-    // CARGAR CARRERAS
-    // ==============================
     public void addCarreras() {
         cargarDesdeCSV("parte2/src/main/resources/csv/carreras.csv", this.em, row -> {
             Carrera carrera = new Carrera();
@@ -78,9 +72,6 @@ public class CargadorDatos {
         });
     }
 
-    // ==============================
-    // CARGAR RELACIÓN ESTUDIANTE-CARRERA
-    // ==============================
     public  void addEstudiantesCarrera() {
         cargarDesdeCSV("parte2/src/main/resources/csv/estudianteCarrera.csv", this.em, row -> {
             Estudiante_Carrera ec = new Estudiante_Carrera();
@@ -107,15 +98,12 @@ public class CargadorDatos {
         });
     }
 
-    // ==============================
-    // MÉT0DO PRINCIPAL PARA CARGAR TOD0
-    // ==============================
     public void cargarTodo() {
         System.out.println("Iniciando carga de datos iniciales...");
 
-        addCarreras();             // Primero carreras
-        addEstudiantes();          // Luego estudiantes
-        addEstudiantesCarrera();   // Finalmente la relación
+        addCarreras();
+        addEstudiantes();
+        addEstudiantesCarrera();
 
         System.out.println("Carga inicial finalizada correctamente.");
     }

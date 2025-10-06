@@ -1,7 +1,5 @@
 package repository;
 
-import entites.Carrera;
-import entites.Estudiante;
 import entites.Estudiante_Carrera;
 
 import java.time.LocalDate;

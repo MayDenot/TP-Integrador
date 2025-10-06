@@ -9,7 +9,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- ENTIDADES REGISTRADAS -->
-        <!-- FALTAN LAS CLASES -->
         <class>entites.Carrera</class>
         <class>entites.Estudiante_Carrera</class>
         <class>entites.Estudiante</class>
